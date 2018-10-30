@@ -5,7 +5,7 @@ import json
 import re
 import sys
 
-usage = "usage: ./weather.py [-c] city1 [city2 ...]\n    -c: display temperature in celcius\n    city1, city2, etc: cities to look up"
+usage = f"usage: {sys.argv[0]} [-c] city1 [city2 ...]\n    -c: display temperature in celcius\n    city1, city2, etc: cities to look up"
 
 if len(sys.argv) < 2:
     print(usage)
