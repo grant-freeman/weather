@@ -11,8 +11,10 @@ if len(sys.argv) < 2:
     print(usage)
     exit()
 elif '-c' in sys.argv:
+    city_list = sys.argv[2:]
     temp_flag = 'C'
 else:
+    city_list = sys.argv[1:]
     temp_flag = 'F'
 
 
@@ -37,5 +39,5 @@ def weather(city):
     print(f"  -humidity: {r_data['main']['humidity']}%")
 
 
-for i in sys.argv[2:]:
+for i in city_list:
     weather(i)
