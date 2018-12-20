@@ -1,9 +1,10 @@
-#!/usr/bin/python3.6
+#!/usr/local/bin/python3.6
 import requests
 from pprint import pprint
 import json
 import re
 import sys
+from progress.bar import ChargingBar
 
 usage = f"usage: {sys.argv[0]} [-c] city1 [city2 ...]\n    -c: display temperature in celcius\n    city1, city2, etc: cities to look up"
 
@@ -16,6 +17,8 @@ elif '-c' in sys.argv:
 else:
     city_list = sys.argv[1:]
     temp_flag = 'F'
+
+output_data = []
 
 
 def weather(city):
@@ -34,10 +37,13 @@ def weather(city):
     else:
         temp = (r_data['main']['temp'] - 273.15)
 
-    print(
+    output_data.append(
         f"{r_data['name']}:\n  -temperature: {round(temp, 1)}°{temp_flag}")
-    print(f"  -humidity: {r_data['main']['humidity']}%")
+    output_data.append(f"  -humidity: {r_data['main']['humidity']}%")
 
 
-for i in city_list:
+for i in ChargingBar('Processing', suffix='%(percent)d%%').iter(city_list):
     weather(i)
+
+for i in output_data:
+    print(i)
