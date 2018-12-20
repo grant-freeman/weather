@@ -4,7 +4,7 @@ from pprint import pprint
 import json
 import re
 import sys
-from progress.bar import ChargingBar
+from progress.counter import Stack
 
 usage = f"usage: {sys.argv[0]} [-c] city1 [city2 ...]\n    -c: display temperature in celcius\n    city1, city2, etc: cities to look up"
 
@@ -42,8 +42,9 @@ def weather(city):
     output_data.append(f"  -humidity: {r_data['main']['humidity']}%")
 
 
-for i in ChargingBar('Processing', suffix='%(percent)d%%').iter(city_list):
+for i in Stack('Fetching ').iter(city_list):
     weather(i)
 
+print('\n')
 for i in output_data:
     print(i)
