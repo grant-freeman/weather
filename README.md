@@ -4,4 +4,4 @@ This is a simple command-line weather tool. Can look up current temperature and 
 
 ## TODO
 
-Error handling on unknown city.
+Come up with more to do :)
