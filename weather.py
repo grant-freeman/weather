@@ -42,7 +42,7 @@ def weather(city):
             f"{r_data['name']}:\n  -temperature: {round(temp, 1)}°{temp_flag}")
         output_data.append(f"  -humidity: {r_data['main']['humidity']}%")
     else:
-        output_data.append(f'Error: {city} not in lookup table.')
+        output_data.append(f'Error: \"{city}\" not in lookup table.')
 
 
 for i in Stack('Fetching ').iter(city_list):
