@@ -25,12 +25,9 @@ def weather(city):
     matches = []
     with open('city.list.json', 'r') as city_json:
         json_list = json.load(city_json)
-        try:
-            for i in json_list:
-                if re.fullmatch(city.lower(), i['name'].lower()):
-                    matches.append(i)
-        except IndexError:
-            output_data.append(f'Error at {city}: Not in lookup table.')
+        for i in json_list:
+            if re.fullmatch(city.lower(), i['name'].lower()):
+                matches.append(i)
 
     if matches:
         r = requests.get(
@@ -45,7 +42,7 @@ def weather(city):
             f"{r_data['name']}:\n  -temperature: {round(temp, 1)}°{temp_flag}")
         output_data.append(f"  -humidity: {r_data['main']['humidity']}%")
     else:
-        pass
+        output_data.append(f'Error: {city} not in lookup table.')
 
 
 for i in Stack('Fetching ').iter(city_list):
