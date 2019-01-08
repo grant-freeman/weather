@@ -25,21 +25,27 @@ def weather(city):
     matches = []
     with open('city.list.json', 'r') as city_json:
         json_list = json.load(city_json)
-        for i in json_list:
-            if re.fullmatch(city.lower(), i['name'].lower()):
-                matches.append(i)
+        try:
+            for i in json_list:
+                if re.fullmatch(city.lower(), i['name'].lower()):
+                    matches.append(i)
+        except IndexError:
+            output_data.append(f'Error at {city}: Not in lookup table.')
 
-    r = requests.get(
-        'http://api.openweathermap.org/data/2.5/weather?id={}&appid=beb929e6e8c5c36b61aa990cfbd90558'.format(matches[0]['id']))
-    r_data = r.json()
-    if temp_flag == 'F':
-        temp = (r_data['main']['temp'] - 273.15) * (9 / 5) + 32
+    if matches:
+        r = requests.get(
+            'http://api.openweathermap.org/data/2.5/weather?id={}&appid=beb929e6e8c5c36b61aa990cfbd90558'.format(matches[0]['id']))
+        r_data = r.json()
+        if temp_flag == 'F':
+            temp = (r_data['main']['temp'] - 273.15) * (9 / 5) + 32
+        else:
+            temp = (r_data['main']['temp'] - 273.15)
+
+        output_data.append(
+            f"{r_data['name']}:\n  -temperature: {round(temp, 1)}°{temp_flag}")
+        output_data.append(f"  -humidity: {r_data['main']['humidity']}%")
     else:
-        temp = (r_data['main']['temp'] - 273.15)
-
-    output_data.append(
-        f"{r_data['name']}:\n  -temperature: {round(temp, 1)}°{temp_flag}")
-    output_data.append(f"  -humidity: {r_data['main']['humidity']}%")
+        pass
 
 
 for i in Stack('Fetching ').iter(city_list):
