@@ -4,4 +4,4 @@ This is a simple command-line weather tool. Can look up current temperature and 
 
 ## TODO
 
-Celcius flag. Error handling on unknown city.
+Error handling on unknown city.
