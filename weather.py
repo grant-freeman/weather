@@ -7,7 +7,7 @@ import sys
 from progress.counter import Stack
 
 usage = f"usage: {sys.argv[0]} [-c] city1 [city2 ...]\n    -c: display temperature in celcius\n    city1, city2, etc: cities to look up"
-api_key = '88b56aca8fd1f8765c032ec473f459ab'
+api_key = 'd101ae2101dd53b3bc0b13776b1452ee'
 if len(sys.argv) < 2:
     print(usage)
     exit()
@@ -33,7 +33,6 @@ def weather(city):
         r = requests.get(
             'http://api.openweathermap.org/data/2.5/weather?id={}&appid={}'.format(matches[0]['id'], api_key))
         r_data = r.json()
-        print(r_data)
         if temp_flag == 'F':
             temp = (r_data['main']['temp'] - 273.15) * (9 / 5) + 32
         else:
